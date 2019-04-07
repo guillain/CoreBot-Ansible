@@ -1,0 +1,19 @@
+# deploy_bot.yml
+# ---
+# playbook that deploy or update a CoreBot app on instance
+
+# Rrequired parameters:
+# - env: dev, stage or prod (cf. instance configuration)
+# - bot: the name of your bot
+# - repo: application configuration repository (git)
+# - branch: branch of the "repo" (master, dev, perso...)
+
+- name: "Deploy CoreBot - {{ bot }} - {{ env }}"
+  hosts: "bot-node-{{ env }}"
+  gather_facts: False
+  vars:
+    bot_name: "{{ bot }}_{{ env }}"
+    bot_repo: "{{ repo }}"
+    branch: "{{ branch }}"
+  tasks:
+    - include_tasks: app/bot/CoreBot-framework.yml

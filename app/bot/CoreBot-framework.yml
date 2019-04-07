@@ -1,0 +1,30 @@
+- name: "CoreBot-framework - Deploy CoreBot repo - {{ bot_name }} - {{ branch }}"
+  vars:
+    git_repo_url: "https://github.com/guillain/CoreBot-framework.git"
+    git_repo_version: "master"
+    git_repo_dest: "/home/ec2-user/{{ bot_name }}"
+  include_tasks: lib/tasks/git/update.yml
+
+- name: "CoreBot-framework - Deploy AppConf repo - {{ bot_name }} - {{ branch }}"
+  vars:
+    git_repo_url: "{{ bot_repo }}"
+    git_repo_version: "{{ branch }}"
+    git_repo_dest: "/home/ec2-user/{{ bot_name }}/app/conf"
+  include_tasks: lib/tasks/git/update.yml
+
+- name: "CoreBot-framework - Install NPM dep - {{ bot_name }} - {{ branch }}"
+  vars:
+    npm_app_path: "/home/ec2-user/{{ bot_name }}/app/"
+  include_tasks: lib/tasks/npm/update.yml
+
+- name: "CoreBot-framework - Stop PM2 - {{ bot_name }} - {{ branch }}"
+  vars:
+    node_app_name: "{{ bot_name }}"
+  include_tasks: lib/tasks/pm2/stop.yml
+
+- name: "CoreBot-framework - Start PM2 - {{ bot_name }} - {{ branch }}"
+  vars:
+    node_app_name: "{{ bot_name }}"
+    node_app_path: "/home/ec2-user/{{ bot_name }}/app/"
+    node_app_script: CoreBot-framework.js
+  include_tasks: lib/tasks/pm2/start.yml

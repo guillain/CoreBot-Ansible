@@ -1,0 +1,11 @@
+# host_vars/Bot.node-dev.yml
+
+ansible_host: 172.31.43.87
+ansible_ssh_port: 222
+ansible_connection: ssh
+
+instance_name: Bot.node-dev
+instance_type: t2.micro
+instance_port: 222
+
+assign_public_ip: yes

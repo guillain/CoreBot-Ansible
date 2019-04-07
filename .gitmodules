@@ -1,0 +1,3 @@
+[submodule "lib"]
+	path = lib
+	url = git@scm.dimensiondata.com:frotsint/ots-ansible.git
